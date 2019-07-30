@@ -11,7 +11,7 @@
 </template>
 
 <script>
-const ROOT_URL = 'http://127.0.0.1:3000/'
+const ROOT_URL = 'https://z6hyajs681.execute-api.us-west-2.amazonaws.com/prod/'
 const twitch = window.Twitch.ext
 
 let channelID = ''

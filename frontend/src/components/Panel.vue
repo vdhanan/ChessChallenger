@@ -14,7 +14,7 @@
 </template>
 
 <script>
-const ROOT_URL = 'http://127.0.0.1:3000/'
+const ROOT_URL = 'https://z6hyajs681.execute-api.us-west-2.amazonaws.com/prod/'
 const twitch = window.Twitch.ext
 
 let channelID = ''
@@ -33,8 +33,9 @@ export default {
     pullChannelQueue(){
       fetch(`${ROOT_URL}queue?channel_id=${channelID}`, {
         method: 'GET',
-        headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
-      }).then(data => data.json()).then(result =>{
+        headers: new Headers({'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+      }).then(data => data.json()).then(result => {
+        console.log(result)
         this.queue = result.Items[0].ChallengeQueue;
         this.acceptingChallenges = result.Items[0].IsActive
       })

@@ -29,6 +29,5 @@ export default new Router({
       name: 'Config',
       component: Config
     }
-  ],
-  mode: 'history'
+  ]
 })
