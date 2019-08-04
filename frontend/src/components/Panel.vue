@@ -42,19 +42,23 @@ export default {
     },
     submitChallenge(){
       let challenger = twitch.viewer
+      console.log(twitch.features.isSubscriptionStatusAvailable)
       if (challenger.id == null || !challenger.subscriptionStatus) {
-        console.log("oof")
-        this.$notify({
-          text: "You must be a subscriber and share your ID to join the queue",
-          type: "error"
+        console.log(challenger.id)
+        console.log(challenger.subscriptionStatus)
+        this.$bvToast.toast("You must be a subscriber and share your ID to join the queue.", {
+          title: "Error",
+          variant: "warning",
+          solid: true
         })
         return
       }
       for (let i = 0; i < this.queue.length; i++){
         if (this.queue[i][2] == challenger.id){
-          this.$notify({
-            text: "You are already in the challenge queue.",
-            type: "error"
+          this.$bvToast.toast("You have already been added to the queue.", {
+            title: "Error",
+            variant: "warning",
+            solid: true
           })
         this.chessDisplayName = ''
         return
@@ -73,15 +77,17 @@ export default {
       .then(res => {
         this.chessDisplayName = '';
         if (res.ok) {
-          this.$notify({
-            text: "You've successfully been added to the queue!",
-            type: "success"
+          this.$bvToast.toast("You're in the queue!", {
+            title: "Success",
+            variant: "success",
+            solid: true
           })
         }
         else {
-          this.$notify({
-            text: "You could not be added to the queue.",
-            type: "error"
+          this.$bvToast.toast("You could not be added to the queue.", {
+            title: "Error",
+            variant: "danger",
+            solid: true
           })
         }
       })
