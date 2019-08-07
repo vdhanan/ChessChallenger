@@ -14,4 +14,4 @@ Here is what viewers see on the streamer's channel:
 
 Whenever an update is made to the queue (e.g. a subscriber joins the queue), the extension backend service uses the Twitch PubSub system to send the update to the streamer and to all viewers. This allows updates to be seen by all viewers in real time.
 
-This extension is currently in beta, pending approval from Twitch. Upon approval, a link to install the extension will be provided here. Thanks for checking this out, and stay tuned!
+This extension is currently in beta, pending approval from Twitch. Upon approval, a link to install the extension will be provided here. For now, however, you can email me at varun[.]dhananjaya[@]gmail[.]com if you'd like to be whitelisted for the beta release. Thanks for checking this out, and stay tuned!
