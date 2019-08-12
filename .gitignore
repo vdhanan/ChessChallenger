@@ -4,6 +4,10 @@
 # Rig JSON #
 Chess Challenger.json
 
+# Setup readme files
+/frontend/README.md
+/backend/README.md
+
 # Boilerplate Folder #
 aws-serverless-express/
 
