@@ -1,13 +1,17 @@
 <template>
   <div class="container">
-    <h1>Challenger Queue</h1>
+    <h1 class="title">Challenger Queue</h1>
     <b-list-group>
       <div v-for="(challenger, position) in queue" :key=position>
-        <b-list-group-item v-bind:href="'https://www.chess.com/live?#ch=' + challenger[1]" target="_blank">{{position+1}}. {{challenger[0]}}</b-list-group-item>
+        <b-list-group-item style="background: #6441A4;">
+          <div class="challenge-list-item">
+            {{position+1}}. {{challenger[0]}}
+          </div>
+        </b-list-group-item>
       </div>
     </b-list-group>
     <div v-show="acceptingChallenges">
-      <b-form-input v-model="chessDisplayName" placeholder="Your chess.com username"></b-form-input>
+      <b-form-input v-model="chessDisplayName" placeholder="Your chess.com username" style="border: #6441A4;"></b-form-input>
       <b-button @click="submitChallenge">Challenge Streamer</b-button>
     </div>
   </div>
@@ -41,10 +45,18 @@ export default {
       })
     },
     submitChallenge(){
+      console.log(this.acceptingChallenges, "accepting challenges")
+      if (!this.acceptingChallenges) {
+        this.$bvToast.toast("This streamer is not accepting challenges at the moment.", {
+          title: "Error",
+          variant: "warning",
+          solid: true
+        })
+        return
+      }
       let challenger = twitch.viewer
       console.log(twitch.features.isSubscriptionStatusAvailable)
       if (challenger.id == null || !challenger.subscriptionStatus) {
-        console.log(challenger.id)
         console.log(challenger.subscriptionStatus)
         this.$bvToast.toast("You must be a subscriber and share your ID to join the queue.", {
           title: "Error",
@@ -103,10 +115,10 @@ export default {
       }
     },
     onPubSub(message) {
-      if (message.isActive) {
+      if ('isActive' in message) {
         this.acceptingChallenges = message.isActive
       }
-      if (message.updatedQueue) {
+      if ('updatedQueue' in message) {
         this.queue = message.updatedQueue
       }
     },
@@ -131,3 +143,24 @@ export default {
   }
 }
 </script>
+
+<style>
+
+* {
+    margin: 0 !important;
+}
+
+.container {
+  background-color: #201c2b;
+  min-height: 300px;
+}
+
+.title {
+  color: #e5e3e8;
+}
+
+.challenge-list-item {
+  color: #e2dbf0;
+}
+
+</style>

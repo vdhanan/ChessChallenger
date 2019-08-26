@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <h1> Quick Setup </h1>
-    <div v-show="!setupComplete">
+    <h1 class="title"> Quick Setup </h1>
+    <div v-if="!setupComplete">
       <b-button @click="setupQueue">Create Challenge Queue</b-button>
     </div>
-    <div v-show="setupComplete">
+    <div v-if="setupComplete">
       <p> "You're good to go!" </p>
     </div>
   </div>
@@ -25,6 +25,16 @@ export default {
     }
   },
   methods: {
+    pullChannelQueue(){
+      fetch(`${ROOT_URL}queue?channel_id=${channelID}`, {
+        method: 'GET',
+        headers: new Headers({'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+      }).then(data => data.json()).then(result =>{
+        if (result.Items.length > 0) {
+          this.setupComplete = true
+        }
+      })
+    },
     setupQueue(){
       fetch(`${ROOT_URL}queue`, {
         method: 'POST',
@@ -49,6 +59,7 @@ export default {
     await twitch.onAuthorized((auth) => {
       channelID = auth.channelId
       token = auth.token
+      this.pullChannelQueue()
     })
   }
 }
